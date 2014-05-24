@@ -18,10 +18,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 /**
- * 显示启动广告大图点击之后的web广告
- * 
- * @author javonewang
- * @version
+ * 加载web页面
  */
 public class WebActivity extends BaseActivity
 {
@@ -132,17 +129,6 @@ public class WebActivity extends BaseActivity
                 startActivity(intent);
             }
         });
-
-        // mWebView.loadUrl("http://app.aplus.pptv.com/zt/ap/list/");
-        // mWebView.loadUrl("http://app.aplus.pptv.com/zt/ap/detail/");
-        // mWebView.loadUrl("file:///android_asset/xx.html");
-        // new Handler()
-        // {
-        // public void handleMessage(android.os.Message msg)
-        // {
-        // mWebView.loadUrl("javascript:abc()");
-        // };
-        // }.sendEmptyMessageDelayed(0, 1000);
     }
 
     private static final int LOAD_START = 0;
@@ -169,7 +155,6 @@ public class WebActivity extends BaseActivity
                 case LOAD_START:
                     // 开始加载
                     findViewById(R.id.progress).setVisibility(View.VISIBLE);// 显示进度对话框
-
                     break;
 
                 case LOAD_OVER:
