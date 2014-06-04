@@ -1,4 +1,4 @@
-package com.cb.parser.structure;
+package com.cb.structure.parser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
