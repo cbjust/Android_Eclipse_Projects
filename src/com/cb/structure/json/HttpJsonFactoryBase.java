@@ -1,4 +1,4 @@
-package com.cb.structure.http;
+package com.cb.structure.json;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
