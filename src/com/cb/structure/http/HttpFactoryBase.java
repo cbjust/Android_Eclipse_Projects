@@ -1,8 +1,6 @@
 package com.cb.structure.http;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
@@ -59,7 +57,7 @@ public abstract class HttpFactoryBase<T> {
 
 	protected abstract String CreateUri(Object... args);
 
-	protected abstract T AnalysisContent(InputStream stream) throws IOException;
+	protected abstract T AnalysisContent(String responseContent) throws IOException;
 
 	private class HttpDownloadTask extends AsyncTask<Object, Integer, T> {
 
@@ -93,14 +91,9 @@ public abstract class HttpFactoryBase<T> {
 
 				HttpResponse response = mHttpClient.execute(request);
 				if (response.getStatusLine().getStatusCode() == 200) {
-					String responseData = EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
-					Log.e("post response", responseData);
-					ByteArrayInputStream stream = new ByteArrayInputStream(responseData.getBytes());
-					try {
-						return AnalysisContent(stream);
-					} finally {
-						stream.close();
-					}
+					String responseContent = EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
+					Log.e("post response", responseContent);
+				    return AnalysisContent(responseContent);
 				} else {
 					return null;
 				}
