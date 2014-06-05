@@ -1,7 +1,6 @@
 package com.cb.structure.json;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -15,6 +14,9 @@ import com.google.gson.reflect.TypeToken;
 
 public abstract class HttpGsonFactoryBase<T> extends HttpFactoryBase<T>
 {
+    // sub class need realize this func
+    protected abstract Class<T> getClazz();
+
     /**
      * use Gson which is a jar file as named gson-2.2.4.jar and should been
      * added.
@@ -26,13 +28,17 @@ public abstract class HttpGsonFactoryBase<T> extends HttpFactoryBase<T>
     @Override
     protected T AnalysisContent(String responseContent)
     {
-        //if response has not contained "[" and "]"
-        if ((responseContent.charAt(0) != '[') && (responseContent.charAt(responseContent.length()-1) != ']'))
+        /**
+         * if response has not contained "[" and "]", add it, so that we can
+         * handle single object or multiple objects in same func. Otherwise,
+         * it will throws exception
+         */
+        if ((responseContent.charAt(0) != '[') && (responseContent.charAt(responseContent.length() - 1) != ']'))
         {
-            responseContent = "["+responseContent+"]";
+            responseContent = "[" + responseContent + "]";
         }
-        
-        java.lang.reflect.Type listType = new TypeToken<ArrayList<T>>(){}.getType();
+
+        java.lang.reflect.Type listType = new TypeToken<T>(){}.getType();
         Gson gson = new Gson();
         T object = gson.fromJson(responseContent, listType);
         return object;
