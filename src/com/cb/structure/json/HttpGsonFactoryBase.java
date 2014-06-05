@@ -14,9 +14,6 @@ import com.google.gson.reflect.TypeToken;
 
 public abstract class HttpGsonFactoryBase<T> extends HttpFactoryBase<T>
 {
-    // sub class need realize this func
-    protected abstract Class<T> getClazz();
-
     /**
      * use Gson which is a jar file as named gson-2.2.4.jar and should been
      * added.
