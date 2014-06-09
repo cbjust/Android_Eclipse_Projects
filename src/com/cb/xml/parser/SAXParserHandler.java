@@ -1,4 +1,4 @@
-package com.cb.xmlparser.parser;
+package com.cb.xml.parser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import com.cb.utils.LogUtils;
-import com.cb.xmlparser.model.Channel;
+import com.cb.xml.model.Channel;
 
 
 /**

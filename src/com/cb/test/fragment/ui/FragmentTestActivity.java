@@ -1,7 +1,7 @@
-package com.cb.fragmenttest.ui;
+package com.cb.test.fragment.ui;
 
 import com.cb.R;
-import com.cb.fragmenttest.listener.OnTitleItemClickListener;
+import com.cb.test.fragment.listener.OnTitleItemClickListener;
 import com.cb.utils.LogUtils;
 
 import android.os.Bundle;

@@ -9,6 +9,7 @@
     <string name="sax2">SAX2</string>
     <string name="pull">Pull</string>
     <string name="dom">DOM</string>
+    <string name="structure_test">Structure Test</string>
     <string name="fragment_test_name">FragmentTest</string>
     <string name="web_activity">WebActivity</string>
 

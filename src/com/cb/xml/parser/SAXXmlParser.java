@@ -1,4 +1,4 @@
-package com.cb.xmlparser.parser;
+package com.cb.xml.parser;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,7 +15,7 @@ import org.xml.sax.XMLReader;
 import android.content.Context;
 
 import com.cb.R;
-import com.cb.xmlparser.model.Channel;
+import com.cb.xml.model.Channel;
 
 /**
  * Parse xml via SAX methods

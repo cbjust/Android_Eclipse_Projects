@@ -1,4 +1,4 @@
-package com.cb.xmlparser.parser;
+package com.cb.xml.parser;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +14,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.cb.xmlparser.model.Channel;
+import com.cb.xml.model.Channel;
 
 /**
  * Parse xml via DOM methods

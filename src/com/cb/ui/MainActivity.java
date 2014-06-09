@@ -1,7 +1,7 @@
 package com.cb.ui;
 
-import com.cb.fragmenttest.ui.FragmentTestActivity;
-import com.cb.xmlparser.ui.XmlParserActivity;
+import com.cb.test.fragment.ui.FragmentTestActivity;
+import com.cb.xml.test.ui.XmlParserActivity;
 import com.cb.R;
 
 import android.os.Bundle;

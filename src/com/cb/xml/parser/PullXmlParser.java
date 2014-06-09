@@ -1,4 +1,4 @@
-package com.cb.xmlparser.parser;
+package com.cb.xml.parser;
 
 import java.io.IOException;
 import java.util.ArrayList;

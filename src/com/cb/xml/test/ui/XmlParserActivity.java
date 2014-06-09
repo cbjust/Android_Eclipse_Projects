@@ -1,14 +1,17 @@
-package com.cb.xmlparser.ui;
+package com.cb.xml.test.ui;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.cb.xmlparser.model.Channel;
-import com.cb.xmlparser.parser.DOMXmlParser;
-import com.cb.xmlparser.parser.PullXmlParser;
-import com.cb.xmlparser.parser.SAXXmlParser;
+import com.cb.structure.HttpEventHandler;
+import com.cb.utils.LogUtils;
+import com.cb.xml.model.Channel;
+import com.cb.xml.parser.DOMXmlParser;
+import com.cb.xml.parser.PullXmlParser;
+import com.cb.xml.parser.SAXXmlParser;
+import com.cb.xml.test.factory.ChannelsFactory;
 import com.cb.R;
 
 import android.os.Bundle;
@@ -21,7 +24,7 @@ import android.app.Activity;
 public class XmlParserActivity extends Activity
 {
 
-    private Button mSaxBtn, mSax2Btn, mPullBtn, mDomBtn;
+    private Button mSaxBtn, mSax2Btn, mPullBtn, mDomBtn, mStructureTestBtn;
 
     private TextView mContentView;
 
@@ -42,11 +45,13 @@ public class XmlParserActivity extends Activity
         mSax2Btn = (Button) findViewById(R.id.sax2_btn);
         mPullBtn = (Button) findViewById(R.id.pull_btn);
         mDomBtn = (Button) findViewById(R.id.dom_btn);
+        mStructureTestBtn = (Button) findViewById(R.id.structure_test_btn);
 
         mSaxBtn.setOnClickListener(listener);
         mSax2Btn.setOnClickListener(listener);
         mPullBtn.setOnClickListener(listener);
         mDomBtn.setOnClickListener(listener);
+        mStructureTestBtn.setOnClickListener(listener);
 
         mContentView = (TextView) findViewById(R.id.content);
 
@@ -75,6 +80,10 @@ public class XmlParserActivity extends Activity
                 case R.id.dom_btn:
                     callDOM();
                     break;
+
+                case R.id.structure_test_btn:
+                    callStructureTest();
+                    break;
             }
         }
     };
@@ -98,6 +107,33 @@ public class XmlParserActivity extends Activity
         {
             e.printStackTrace();
         }
+    }
+
+    protected void callStructureTest()
+    {
+        ChannelsFactory factory = new ChannelsFactory();
+        factory.DownloaDatas();
+        factory.setHttpEventHandler(new HttpEventHandler<ArrayList<Channel>>()
+        {
+
+            @Override
+            public void HttpSucessHandler(ArrayList<Channel> result)
+            {
+                for (int i = 0; i < result.size(); i++)
+                {
+                    Channel c = result.get(i);
+                    mData.append("Structure_test_" + i + ": " + c.getId() + " " + c.getUrl() + " " + c.getContent()
+                            + "\n");
+                }
+                mContentView.setText(mData);
+            }
+
+            @Override
+            public void HttpFailHandler()
+            {
+                LogUtils.error("failed");
+            }
+        });
     }
 
     public void callSAX2()

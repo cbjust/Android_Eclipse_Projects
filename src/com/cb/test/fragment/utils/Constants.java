@@ -1,4 +1,4 @@
-package com.cb.fragmenttest.utils;
+package com.cb.test.fragment.utils;
 
 public class Constants {
 
