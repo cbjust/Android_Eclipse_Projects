@@ -1,4 +1,4 @@
-package com.cb.test;
+package com.cb.test.json;
 
 public class Person
 {

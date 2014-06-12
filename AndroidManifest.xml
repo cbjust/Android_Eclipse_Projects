@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="8"
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.cb.xml.test.ui.XmlParserActivity"
+            android:name="com.cb.test.xml.parser.ui.XmlParserActivity"
             android:label="@string/xml_parser_name" >
         </activity>
         <activity
@@ -35,7 +35,7 @@
         </activity>
         
         <activity
-            android:name="com.cb.web.ui.WebActivity"
+            android:name="com.cb.test.web.ui.WebActivity"
             android:label="@string/web_activity" >
         </activity>
         

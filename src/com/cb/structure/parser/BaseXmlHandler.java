@@ -360,4 +360,49 @@ public abstract class BaseXmlHandler<Params, Result> extends DefaultHandler
         }
         return baos.toString().trim();
     }
+
+    /**
+     * SAX解析本地XML文件格式
+     * <功能详细描述>
+     * @param stream
+     * @return
+     * @see [类、类#方法、类#成员]
+     */
+    public Result parseLocalXml(InputStream stream)
+    {
+        // 1.实例化一个SAXParserFactory对象
+        SAXParserFactory factory = SAXParserFactory.newInstance();
+
+        try
+        {
+            // 2.实例化一个SAXParser对象；创建XMLReader对象,解析器
+            SAXParser parser = factory.newSAXParser();
+            XMLReader reader = parser.getXMLReader();
+
+            // 3.设置handler，事件处理器
+            reader.setContentHandler(this);
+
+            // 4.读取文件流
+            // InputStream stream =
+            // context.getResources().openRawResource(R.raw.channels);
+            InputSource source = new InputSource(stream);
+
+            // 5.解析文件
+            reader.parse(source);
+        }
+        catch (ParserConfigurationException e)
+        {
+            e.printStackTrace();
+        }
+        catch (SAXException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 }

@@ -1,4 +1,4 @@
-package com.cb.structure.xml;
+package com.cb.structure.http.xml;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.cb.structure.HttpFactoryBase;
+import com.cb.structure.http.HttpFactoryBase;
 
 
 public abstract class HttpXmlFactoryBase<T extends Object> extends HttpFactoryBase<T> {

@@ -1,4 +1,4 @@
-package com.cb.structure;
+package com.cb.structure.http;
 
 public abstract class HttpEventHandler <T> {
 	

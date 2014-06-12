@@ -1,4 +1,4 @@
-package com.cb.structure.json;
+package com.cb.structure.http.json;
 
 import java.io.IOException;
 import java.util.ArrayList;

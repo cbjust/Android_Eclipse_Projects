@@ -1,4 +1,4 @@
-package com.cb.xml.model;
+package com.cb.test.xml.parser.model;
 
 public class Channel
 {

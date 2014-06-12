@@ -1,38 +1,39 @@
-package com.cb.xml.parser;
+package com.cb.test.xml.parser.handler;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
+import android.content.Context;
+
+import com.cb.structure.parser.BaseXmlHandler;
+import com.cb.test.xml.parser.model.Channel;
 import com.cb.utils.LogUtils;
-import com.cb.xml.model.Channel;
 
 /**
- * Sub class of DefaultHandler to parse res/raw/another_type_channel.xml via
- * SAX
+ * Sub class of BaseXmlHandler to parse another_type_channel.xml via SAX from
+ * net
  * 
  * @author binchen
  * @date 2014.5.13
  */
 
-public class SAXParserHandler2 extends DefaultHandler
+public class SAXParserServerXmlHandler extends BaseXmlHandler<Void, List<Channel>>
 {
 
-    private static final boolean DEBUG = false;
+    public SAXParserServerXmlHandler(Context context, Void param)
+    {
+        super(param);
+        baseUrl = "http://192.168.27.62:8080/hello/another_type_channel.xml";
+    }
 
-    private List<Channel> channels;
+    private static final boolean DEBUG = false;
 
     private Channel channel;
 
     private StringBuilder data;
-
-    public List<Channel> getList()
-    {
-        return channels;
-    }
 
     @Override
     public void startDocument() throws SAXException
@@ -41,7 +42,7 @@ public class SAXParserHandler2 extends DefaultHandler
         {
             LogUtils.verbose("startDocument");
         }
-        channels = new ArrayList<Channel>();
+        result = new ArrayList<Channel>();
     }
 
     @Override
@@ -93,7 +94,7 @@ public class SAXParserHandler2 extends DefaultHandler
 
         if (name.equals("item"))
         {
-            channels.add(channel);
+            result.add(channel);
         }
         else if (name.equals("id"))
         {

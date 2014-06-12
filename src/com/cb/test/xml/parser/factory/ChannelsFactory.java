@@ -1,12 +1,12 @@
-package com.cb.xml.test.factory;
+package com.cb.test.xml.parser.factory;
 
 import java.util.ArrayList;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-import com.cb.structure.xml.HttpXmlFactoryBase;
-import com.cb.xml.model.Channel;
+import com.cb.structure.http.xml.HttpXmlFactoryBase;
+import com.cb.test.xml.parser.model.Channel;
 
 /**
  * tomcat搭建服务器，测试

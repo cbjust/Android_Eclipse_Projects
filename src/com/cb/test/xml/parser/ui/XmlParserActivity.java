@@ -1,25 +1,26 @@
-package com.cb.xml.test.ui;
+package com.cb.test.xml.parser.ui;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.cb.structure.HttpEventHandler;
-import com.cb.utils.LogUtils;
-import com.cb.xml.model.Channel;
-import com.cb.xml.parser.DOMXmlParser;
-import com.cb.xml.parser.PullXmlParser;
-import com.cb.xml.parser.SAXXmlParser;
-import com.cb.xml.test.factory.ChannelsFactory;
-import com.cb.R;
-
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import android.app.Activity;
+
+import com.cb.R;
+import com.cb.structure.http.HttpEventHandler;
+import com.cb.test.xml.parser.factory.ChannelsFactory;
+import com.cb.test.xml.parser.handler.DOMParserXmlHandler;
+import com.cb.test.xml.parser.handler.PullParserXmlHandler;
+import com.cb.test.xml.parser.handler.SAXParserLocalXmlHandler;
+import com.cb.test.xml.parser.handler.SAXParserServerXmlHandler;
+import com.cb.test.xml.parser.model.Channel;
+import com.cb.utils.LogUtils;
 
 public class XmlParserActivity extends Activity
 {
@@ -67,10 +68,10 @@ public class XmlParserActivity extends Activity
             switch (view.getId())
             {
                 case R.id.sax_btn:
-                    callSAX();
+                    parseLocalXmlViaSAX();
                     break;
                 case R.id.sax2_btn:
-                    callSAX2();
+                    parseServerXmlViaSAX();
                     break;
 
                 case R.id.pull_btn:
@@ -88,11 +89,15 @@ public class XmlParserActivity extends Activity
         }
     };
 
-    public void callSAX()
+    public void parseLocalXmlViaSAX()
     {
         try
         {
-            List<Channel> list = SAXXmlParser.getChannelList(this);
+            InputStream stream = this.getResources().openRawResource(R.raw.channels);
+
+            SAXParserLocalXmlHandler handler = new SAXParserLocalXmlHandler(this, null);
+            List<Channel> list = handler.parseLocalXml(stream);
+
             for (int i = 0; i < list.size(); i++)
             {
                 Channel c = list.get(i);
@@ -107,6 +112,61 @@ public class XmlParserActivity extends Activity
         {
             e.printStackTrace();
         }
+    }
+
+    public void parseServerXmlViaSAX()
+    {
+        try
+        {
+            SAXParserServerXmlHandler handler = new SAXParserServerXmlHandler(this, null);
+            List<Channel> list = handler.parseServerXml();
+            for (int i = 0; i < list.size(); i++)
+            {
+                Channel c = list.get(i);
+                mData.append("SAX2_" + i + ": " + c.getId() + " " + c.getUrl() + " " + c.getContent() + "\n");
+            }
+
+            mContentView.setText(mData);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void callPull()
+    {
+        List<Map<String, String>> list = PullParserXmlHandler.getList(this);
+
+        for (int i = 0; i < list.size(); i++)
+        {
+            String id = list.get(i).get("id");
+            String url = list.get(i).get("url");
+            String value = list.get(i).get("content");
+            // LogUtils.verbose("Pull_" + i + ": " + id + "/" + url + "/" +
+            // value);
+            mData.append("Pull_" + i + ": " + id + "/" + url + "/" + value + "\n");
+        }
+
+        mContentView.setText(mData);
+    }
+
+    public void callDOM()
+    {
+        List<Channel> list = new ArrayList<Channel>();
+        InputStream stream = getResources().openRawResource(R.raw.channels);
+
+        list = DOMParserXmlHandler.getList(stream);
+
+        for (int i = 0; i < list.size(); i++)
+        {
+            Channel c = list.get(i);
+            // LogUtils.verbose("DOM_" + i + ": " + c.getId() + " " +
+            // c.getUrl() + " " + c.getContent());
+            mData.append("DOM_" + i + ": " + c.getId() + " " + c.getUrl() + " " + c.getContent() + "\n");
+        }
+
+        mContentView.setText(mData);
     }
 
     protected void callStructureTest()
@@ -134,62 +194,6 @@ public class XmlParserActivity extends Activity
                 LogUtils.error("failed");
             }
         });
-    }
-
-    public void callSAX2()
-    {
-        try
-        {
-            List<Channel> list = SAXXmlParser.getChannelList2(this);
-            for (int i = 0; i < list.size(); i++)
-            {
-                Channel c = list.get(i);
-                // LogUtils.verbose("SAX2_" + i + ": " + c.getId() + " " +
-                // c.getUrl() + " " + c.getContent());
-                mData.append("SAX2_" + i + ": " + c.getId() + " " + c.getUrl() + " " + c.getContent() + "\n");
-            }
-
-            mContentView.setText(mData);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-
-    public void callPull()
-    {
-        List<Map<String, String>> list = PullXmlParser.getList(this);
-
-        for (int i = 0; i < list.size(); i++)
-        {
-            String id = list.get(i).get("id");
-            String url = list.get(i).get("url");
-            String value = list.get(i).get("content");
-            // LogUtils.verbose("Pull_" + i + ": " + id + "/" + url + "/" +
-            // value);
-            mData.append("Pull_" + i + ": " + id + "/" + url + "/" + value + "\n");
-        }
-
-        mContentView.setText(mData);
-    }
-
-    public void callDOM()
-    {
-        List<Channel> list = new ArrayList<Channel>();
-        InputStream stream = getResources().openRawResource(R.raw.channels);
-
-        list = DOMXmlParser.getList(stream);
-
-        for (int i = 0; i < list.size(); i++)
-        {
-            Channel c = list.get(i);
-            // LogUtils.verbose("DOM_" + i + ": " + c.getId() + " " +
-            // c.getUrl() + " " + c.getContent());
-            mData.append("DOM_" + i + ": " + c.getId() + " " + c.getUrl() + " " + c.getContent() + "\n");
-        }
-
-        mContentView.setText(mData);
     }
 
 }

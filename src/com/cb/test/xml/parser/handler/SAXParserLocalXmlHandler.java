@@ -1,39 +1,38 @@
-package com.cb.xml.parser;
+package com.cb.test.xml.parser.handler;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
+import android.content.Context;
+
+import com.cb.structure.parser.BaseXmlHandler;
+import com.cb.test.xml.parser.model.Channel;
 import com.cb.utils.LogUtils;
-import com.cb.xml.model.Channel;
-
 
 /**
- * Sub class of DefaultHandler to parse res/raw/channels.xml via SAX
+ * Sub class of BaseXmlHandler to parse res/raw/channels.xml via SAX
  * 
  * @author binchen
  * @date 2014.5.13
  */
 
-public class SAXParserHandler extends DefaultHandler
+public class SAXParserLocalXmlHandler extends BaseXmlHandler<Void, List<Channel>>
 {
+    public SAXParserLocalXmlHandler(Context context, Void param)
+    {
+        super(param);
+    }
+
     private static final boolean DEBUG = false;
 
     final int ITEM = 0x0005;
 
-    private List<Channel> list;
-
     private Channel channel;
 
     private int currentState = 0;
-
-    public List<Channel> getList()
-    {
-        return list;
-    }
 
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException
@@ -55,7 +54,7 @@ public class SAXParserHandler extends DefaultHandler
         if (DEBUG)
             LogUtils.verbose("startDocument");
 
-        list = new ArrayList<Channel>();
+        result = new ArrayList<Channel>();
     }
 
     @Override
@@ -104,7 +103,7 @@ public class SAXParserHandler extends DefaultHandler
 
         if (localName.equals("item"))
         {
-            list.add(channel);
+            result.add(channel);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.cb.xml.parser;
+package com.cb.test.xml.parser.handler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +14,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.cb.xml.model.Channel;
+import com.cb.test.xml.parser.model.Channel;
 
 /**
  * Parse xml via DOM methods
@@ -23,7 +23,7 @@ import com.cb.xml.model.Channel;
  * @date 2014.5.13
  */
 
-public class DOMXmlParser
+public class DOMParserXmlHandler
 {
     public static List<Channel> getList(InputStream stream)
     {

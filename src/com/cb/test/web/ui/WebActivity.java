@@ -1,4 +1,4 @@
-package com.cb.web.ui;
+package com.cb.test.web.ui;
 
 import com.cb.R;
 import com.cb.utils.BaseActivity;

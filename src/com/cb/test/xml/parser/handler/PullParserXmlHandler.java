@@ -1,4 +1,4 @@
-package com.cb.xml.parser;
+package com.cb.test.xml.parser.handler;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import com.cb.R;
  * @date 2014.5.13
  */
 
-public class PullXmlParser
+public class PullParserXmlHandler
 {
     public static List<Map<String, String>> getList(Context context)
     {

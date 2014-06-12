@@ -1,4 +1,4 @@
-package com.cb.structure;
+package com.cb.structure.http;
 
 import java.io.IOException;
 import java.util.ArrayList;
