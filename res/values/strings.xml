@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Android_Eclipse_Projects</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="xml_parser_name">XmlParserTest</string>
+    <string name="local_sax">Local Sax</string>
+    <string name="server_sax">Server Sax</string>
+    <string name="pull">Pull</string>
+    <string name="dom">DOM</string>
+    <string name="structure_test">Structure Test</string>
+    <string name="fragment_test_name">FragmentTest</string>
+    <string name="web_activity">WebActivity</string>
+
+</resources>

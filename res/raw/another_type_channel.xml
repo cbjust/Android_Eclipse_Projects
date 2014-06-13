@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<channel>
+	<item>
+   		<id>0</id>
+    	<url>http://www.baidu.com</url>
+    	<content>百度</content>
+	</item>
+
+	<item>
+    	<id>1</id>
+    	<url>http://www.qq.com</url>
+    	<content>腾讯</content>
+	</item>
+	<item>
+    	<id>2</id>
+    	<url>http://www.sina.com.cn</url>
+    	<content>新浪</content>
+	</item>
+	<item>
+    	<id>3</id>
+    	<url>http://www.taobao.com</url>
+    	<content>淘宝</content>
+	</item>
+</channel>
