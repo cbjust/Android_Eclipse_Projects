@@ -25,7 +25,7 @@ import com.cb.utils.LogUtils;
 public class XmlParserActivity extends Activity
 {
 
-    private Button mSaxBtn, mSax2Btn, mPullBtn, mDomBtn, mStructureTestBtn;
+    private Button mLocalSaxBtn, mServerSaxBtn, mPullBtn, mDomBtn, mStructureTestBtn;
 
     private TextView mContentView;
 
@@ -42,14 +42,14 @@ public class XmlParserActivity extends Activity
 
     private void initViews()
     {
-        mSaxBtn = (Button) findViewById(R.id.sax_btn);
-        mSax2Btn = (Button) findViewById(R.id.sax2_btn);
+        mLocalSaxBtn = (Button) findViewById(R.id.local_sax_btn);
+        mServerSaxBtn = (Button) findViewById(R.id.server_sax_btn);
         mPullBtn = (Button) findViewById(R.id.pull_btn);
         mDomBtn = (Button) findViewById(R.id.dom_btn);
         mStructureTestBtn = (Button) findViewById(R.id.structure_test_btn);
 
-        mSaxBtn.setOnClickListener(listener);
-        mSax2Btn.setOnClickListener(listener);
+        mLocalSaxBtn.setOnClickListener(listener);
+        mServerSaxBtn.setOnClickListener(listener);
         mPullBtn.setOnClickListener(listener);
         mDomBtn.setOnClickListener(listener);
         mStructureTestBtn.setOnClickListener(listener);
@@ -67,10 +67,10 @@ public class XmlParserActivity extends Activity
         {
             switch (view.getId())
             {
-                case R.id.sax_btn:
+                case R.id.local_sax_btn:
                     parseLocalXmlViaSAX();
                     break;
-                case R.id.sax2_btn:
+                case R.id.server_sax_btn:
                     parseServerXmlViaSAX();
                     break;
 
@@ -103,7 +103,7 @@ public class XmlParserActivity extends Activity
                 Channel c = list.get(i);
                 // LogUtils.verbose("SAX_" + i + ": " + c.getId() + " " +
                 // c.getUrl() + " " + c.getContent());
-                mData.append("SAX_" + i + ": " + c.getId() + " " + c.getUrl() + " " + c.getContent() + "\n");
+                mData.append("Local_SAX_" + i + ": " + c.getId() + " " + c.getUrl() + " " + c.getContent() + "\n");
             }
 
             mContentView.setText(mData);
@@ -123,7 +123,7 @@ public class XmlParserActivity extends Activity
             for (int i = 0; i < list.size(); i++)
             {
                 Channel c = list.get(i);
-                mData.append("SAX2_" + i + ": " + c.getId() + " " + c.getUrl() + " " + c.getContent() + "\n");
+                mData.append("Server_SAX_" + i + ": " + c.getId() + " " + c.getUrl() + " " + c.getContent() + "\n");
             }
 
             mContentView.setText(mData);

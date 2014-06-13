@@ -6,16 +6,16 @@
     tools:context=".XmlParserActivity" >
 
     <Button
-        android:id="@+id/sax_btn"
+        android:id="@+id/local_sax_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sax" />
+        android:text="@string/local_sax" />
 
     <Button
-        android:id="@+id/sax2_btn"
+        android:id="@+id/server_sax_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sax2" />
+        android:text="@string/server_sax" />
 
     <Button
         android:id="@+id/pull_btn"
