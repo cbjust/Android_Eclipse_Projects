@@ -27,6 +27,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+/**
+ * use HttpURLConnection
+ * 
+ * @author binchen
+ * @date 2014-6-6
+ */
 public abstract class BaseXmlHandler<Params, Result> extends DefaultHandler
 {
     public static final String HEADER_GZIP_VALUE = "gzip";
