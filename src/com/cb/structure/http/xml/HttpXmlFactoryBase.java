@@ -26,7 +26,7 @@ public abstract class HttpXmlFactoryBase<T extends Object> extends HttpFactoryBa
 			SAXParserFactory spf = SAXParserFactory.newInstance();
 			SAXParser sp = spf.newSAXParser();
 			XMLReader xr = sp.getXMLReader();
-			MyContentHandler handler = new MyContentHandler();
+			CustomerHandler handler = new CustomerHandler();
 			xr.setContentHandler(handler);
 			InputSource inputSource = new InputSource(stream);
             xr.parse(inputSource);
@@ -47,7 +47,7 @@ public abstract class HttpXmlFactoryBase<T extends Object> extends HttpFactoryBa
 	
 	protected abstract T createContent();
 	
-	private class MyContentHandler extends DefaultHandler {
+	private class CustomerHandler extends DefaultHandler {
 		
 		private StringBuilder mValue;
 		private T mContent;

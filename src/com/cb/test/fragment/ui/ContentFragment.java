@@ -44,8 +44,8 @@ public class ContentFragment extends Fragment{
 	}
 
 	public void updateContent(int position) {
-		Log.d(TAG, "updateContent, mContent["+position+"] is "+Constants.mContent[position]);
-		mTextView.setText(Constants.mContent[position]);
+		Log.d(TAG, "updateContent, mContent["+position+"] is "+Constants.CONTENT[position]);
+		mTextView.setText(Constants.CONTENT[position]);
 	}
 	
 	

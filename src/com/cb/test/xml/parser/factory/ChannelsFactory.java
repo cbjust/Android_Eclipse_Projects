@@ -9,27 +9,26 @@ import com.cb.structure.http.xml.HttpXmlFactoryBase;
 import com.cb.test.xml.parser.model.Channel;
 
 /**
- * tomcat搭建服务器，测试
- * <一句话功能简述>
- * <功能详细描述>
+ * build tomcat server and test
  * 
- * @author  binchen
- * @version  [版本号, 2014-6-9]
- * @see  [相关类/方法]
- * @since  [产品/模块版本]
+ * @author binchen
+ * @date 2014-6-9
  */
 public class ChannelsFactory extends HttpXmlFactoryBase<ArrayList<Channel>>
 {
 
-    Channel channel;
+    private static final String DEFAULT_URL = "http://192.168.27.53:8080/hello/another_type_channel.xml";
+
+    Channel mChannel;
 
     @Override
-    protected void xmlStartElement(String nodeName, ArrayList<Channel> content, Attributes attributes) throws SAXException
+    protected void xmlStartElement(String nodeName, ArrayList<Channel> content, Attributes attributes)
+            throws SAXException
     {
 
         if (nodeName.equals("item"))
         {
-            channel = new Channel();
+            mChannel = new Channel();
         }
     }
 
@@ -38,19 +37,19 @@ public class ChannelsFactory extends HttpXmlFactoryBase<ArrayList<Channel>>
     {
         if (nodeName.equals("item"))
         {
-            content.add(channel);
+            content.add(mChannel);
         }
         else if (nodeName.equals("id"))
         {
-            channel.setId(value.toString().trim());
+            mChannel.setId(value.toString().trim());
         }
         else if (nodeName.equals("url"))
         {
-            channel.setUrl(value.toString().trim());
+            mChannel.setUrl(value.toString().trim());
         }
         else if (nodeName.equals("content"))
         {
-            channel.setContent(value.toString().trim());
+            mChannel.setContent(value.toString().trim());
         }
     }
 
@@ -62,13 +61,14 @@ public class ChannelsFactory extends HttpXmlFactoryBase<ArrayList<Channel>>
 
     /**
      * 服务器地址
+     * 
      * @param args
      * @return
      */
     @Override
     protected String CreateUri(Object... args)
     {
-        return "http://192.168.27.62:8080/hello/another_type_channel.xml";
+        return DEFAULT_URL;
     }
 
 }

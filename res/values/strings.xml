@@ -9,7 +9,8 @@
     <string name="server_sax">Server Sax</string>
     <string name="pull">Pull</string>
     <string name="dom">DOM</string>
-    <string name="structure_test">Structure Test</string>
+    <string name="factory_base">Factory Base Func</string>
+    <string name="gson_test">Gson Test</string>
     <string name="fragment_test_name">FragmentTest</string>
     <string name="web_activity">WebActivity</string>
 

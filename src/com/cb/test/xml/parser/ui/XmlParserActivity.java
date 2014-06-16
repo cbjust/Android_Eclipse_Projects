@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.cb.R;
 import com.cb.structure.http.HttpEventHandler;
+import com.cb.test.json.GsonTest;
+import com.cb.test.json.Person;
 import com.cb.test.xml.parser.factory.ChannelsFactory;
 import com.cb.test.xml.parser.handler.DOMParserXmlHandler;
 import com.cb.test.xml.parser.handler.PullParserXmlHandler;
@@ -25,7 +27,7 @@ import com.cb.utils.LogUtils;
 public class XmlParserActivity extends Activity
 {
 
-    private Button mLocalSaxBtn, mServerSaxBtn, mPullBtn, mDomBtn, mStructureTestBtn;
+    private Button mLocalSaxBtn, mServerSaxBtn, mPullBtn, mDomBtn, mFactoryBaseBtn, mGsonBtn;
 
     private TextView mContentView;
 
@@ -46,13 +48,15 @@ public class XmlParserActivity extends Activity
         mServerSaxBtn = (Button) findViewById(R.id.server_sax_btn);
         mPullBtn = (Button) findViewById(R.id.pull_btn);
         mDomBtn = (Button) findViewById(R.id.dom_btn);
-        mStructureTestBtn = (Button) findViewById(R.id.structure_test_btn);
+        mFactoryBaseBtn = (Button) findViewById(R.id.factory_base_btn);
+        mGsonBtn = (Button) findViewById(R.id.gson_test_btn);
 
         mLocalSaxBtn.setOnClickListener(listener);
         mServerSaxBtn.setOnClickListener(listener);
         mPullBtn.setOnClickListener(listener);
         mDomBtn.setOnClickListener(listener);
-        mStructureTestBtn.setOnClickListener(listener);
+        mFactoryBaseBtn.setOnClickListener(listener);
+        mGsonBtn.setOnClickListener(listener);
 
         mContentView = (TextView) findViewById(R.id.content);
 
@@ -65,6 +69,8 @@ public class XmlParserActivity extends Activity
         @Override
         public void onClick(View view)
         {
+            mContentView.setText("");
+
             switch (view.getId())
             {
                 case R.id.local_sax_btn:
@@ -82,8 +88,12 @@ public class XmlParserActivity extends Activity
                     callDOM();
                     break;
 
-                case R.id.structure_test_btn:
-                    callStructureTest();
+                case R.id.factory_base_btn:
+                    callFactoryBase();
+                    break;
+
+                case R.id.gson_test_btn:
+                    callGson();
                     break;
             }
         }
@@ -101,12 +111,11 @@ public class XmlParserActivity extends Activity
             for (int i = 0; i < list.size(); i++)
             {
                 Channel c = list.get(i);
-                // LogUtils.verbose("SAX_" + i + ": " + c.getId() + " " +
-                // c.getUrl() + " " + c.getContent());
                 mData.append("Local_SAX_" + i + ": " + c.getId() + " " + c.getUrl() + " " + c.getContent() + "\n");
             }
 
             mContentView.setText(mData);
+            mData.delete(0, mData.length());
         }
         catch (Exception e)
         {
@@ -127,6 +136,7 @@ public class XmlParserActivity extends Activity
             }
 
             mContentView.setText(mData);
+            mData.delete(0, mData.length());
         }
         catch (Exception e)
         {
@@ -143,12 +153,11 @@ public class XmlParserActivity extends Activity
             String id = list.get(i).get("id");
             String url = list.get(i).get("url");
             String value = list.get(i).get("content");
-            // LogUtils.verbose("Pull_" + i + ": " + id + "/" + url + "/" +
-            // value);
             mData.append("Pull_" + i + ": " + id + "/" + url + "/" + value + "\n");
         }
 
         mContentView.setText(mData);
+        mData.delete(0, mData.length());
     }
 
     public void callDOM()
@@ -161,18 +170,22 @@ public class XmlParserActivity extends Activity
         for (int i = 0; i < list.size(); i++)
         {
             Channel c = list.get(i);
-            // LogUtils.verbose("DOM_" + i + ": " + c.getId() + " " +
-            // c.getUrl() + " " + c.getContent());
             mData.append("DOM_" + i + ": " + c.getId() + " " + c.getUrl() + " " + c.getContent() + "\n");
         }
 
         mContentView.setText(mData);
+        mData.delete(0, mData.length());
     }
 
-    protected void callStructureTest()
+    /**
+     * use another base class (HttpFactoryBase) to analyze xml
+     */
+    protected void callFactoryBase()
     {
+        // sub-class of HttpFactoryBase just has to call DownloadDatas func
+        // and setHttpEventHandler
         ChannelsFactory factory = new ChannelsFactory();
-        factory.DownloaDatas();
+        factory.DownloadDatas();
         factory.setHttpEventHandler(new HttpEventHandler<ArrayList<Channel>>()
         {
 
@@ -182,10 +195,10 @@ public class XmlParserActivity extends Activity
                 for (int i = 0; i < result.size(); i++)
                 {
                     Channel c = result.get(i);
-                    mData.append("Structure_test_" + i + ": " + c.getId() + " " + c.getUrl() + " " + c.getContent()
-                            + "\n");
+                    mData.append("FactoryBase_" + i + ": " + c.getId() + " " + c.getUrl() + " " + c.getContent() + "\n");
                 }
                 mContentView.setText(mData);
+                mData.delete(0, mData.length());
             }
 
             @Override
@@ -196,4 +209,15 @@ public class XmlParserActivity extends Activity
         });
     }
 
+    public void callGson()
+    {
+        ArrayList<Person> list = GsonTest.createJsonList();
+
+        for (Person person : list)
+        {
+            mData.append("Gson_" + person.getName() + ", " + person.getAge() + ", " + person.getAddress() + "\n");
+        }
+        mContentView.setText(mData);
+        mData.delete(0, mData.length());
+    }
 }

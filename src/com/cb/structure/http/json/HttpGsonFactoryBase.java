@@ -2,6 +2,7 @@ package com.cb.structure.http.json;
 
 import java.io.IOException;
 
+import com.cb.structure.http.HttpFactoryBase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -9,7 +10,7 @@ import com.google.gson.reflect.TypeToken;
  * use Gson to resolve json code
  * 
  * @author binchen
- * @version [版本号, 2014-6-4]
+ * @date 2014-6-4
  */
 
 public abstract class HttpGsonFactoryBase<T> extends HttpFactoryBase<T>
@@ -35,7 +36,7 @@ public abstract class HttpGsonFactoryBase<T> extends HttpFactoryBase<T>
             responseContent = "[" + responseContent + "]";
         }
 
-        java.lang.reflect.Type listType = new TypeToken<T>(){}.getType();
+        java.lang.reflect.Type listType = new TypeToken<T>() {}.getType();
         Gson gson = new Gson();
         T object = gson.fromJson(responseContent, listType);
         return object;

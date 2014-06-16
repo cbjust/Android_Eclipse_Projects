@@ -8,6 +8,8 @@ import org.apache.http.protocol.HTTP;
 
 import android.util.JsonReader;
 
+import com.cb.structure.http.HttpFactoryBase;
+
 public abstract class HttpJsonFactoryBase<T> extends HttpFactoryBase<T>
 {
 

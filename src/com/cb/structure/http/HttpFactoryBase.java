@@ -32,7 +32,7 @@ public abstract class HttpFactoryBase<T> {
 		this.httpEventHandler = httpEventHandler;
 	}
 
-	public void DownloaDatas(Object... args) {
+	public void DownloadDatas(Object... args) {
 		cancel();
 		task = new HttpDownloadTask();
 		task.execute(args);
@@ -55,6 +55,7 @@ public abstract class HttpFactoryBase<T> {
 		return null;
 	}
 
+	// return uri
 	protected abstract String CreateUri(Object... args);
 
 	protected abstract T AnalysisContent(String responseContent) throws IOException;

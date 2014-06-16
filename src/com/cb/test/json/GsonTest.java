@@ -1,32 +1,32 @@
 package com.cb.test.json;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import com.cb.utils.LogUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 public class GsonTest
 {
-    public void createJsonList()
+    public static ArrayList<Person> createJsonList()
     {
 
-        List<Person> list = new ArrayList<Person>();
+        ArrayList<Person> list = new ArrayList<Person>();
 
         Person person1 = new Person();
-        person1.setName("jack1");
+        person1.setName("Jack");
         person1.setAge(23);
-        person1.setAddress("shanghai");
+        person1.setAddress("北京");
 
         Person person2 = new Person();
-        person2.setName("jack2");
+        person2.setName("Tom");
         person2.setAge(24);
-        person2.setAddress("shanghai");
+        person2.setAddress("上海");
 
         Person person3 = new Person();
-        person3.setName("jack3");
+        person3.setName("Justin");
         person3.setAge(25);
-        person3.setAddress("shanghai");
+        person3.setAddress("浙江");
 
         list.add(person1);
         list.add(person2);
@@ -34,15 +34,20 @@ public class GsonTest
 
         Gson gson = new Gson();
         String str = gson.toJson(list);
-        System.out.println(str);
+        LogUtils.verbose(str);
 
-        java.lang.reflect.Type listType = new TypeToken<ArrayList<Person>>(){}.getType();
-
-        ArrayList<Person> list2 = gson.fromJson(str, listType);
-
-        for (Person person : list2)
+        java.lang.reflect.Type listType = new TypeToken<ArrayList<Person>>()
         {
-            System.out.println(person.getName() + ", " + person.getAge() + ", " + person.getAddress());
-        }
+        }.getType();
+
+        list = gson.fromJson(str, listType);
+
+        // for (Person person : list)
+        // {
+        // LogUtils.verbose(person.getName() + ", " + person.getAge() + ", " +
+        // person.getAddress());
+        // }
+
+        return list;
     }
 }

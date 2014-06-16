@@ -49,7 +49,7 @@ public class TitleFragment extends Fragment implements OnItemClickListener {
 		Log.d(TAG, "onCreateView");
 		View view = inflater.inflate(R.layout.title_fragment, container, false);
 		mListView = (ListView) view.findViewById(R.id.list);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, Constants.mTitle);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, Constants.TITLE);
 		mListView.setAdapter(adapter);
 		mListView.setOnItemClickListener(this);
 		return view;

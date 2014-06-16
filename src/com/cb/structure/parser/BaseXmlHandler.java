@@ -90,7 +90,7 @@ public abstract class BaseXmlHandler<Params, Result> extends DefaultHandler
     }
 
     /**
-     * 生成请求给服务器的地址
+     * generate url
      * 
      * @return the string
      */
@@ -100,13 +100,12 @@ public abstract class BaseXmlHandler<Params, Result> extends DefaultHandler
     }
 
     /**
-     * 用post方法请求数据，并xml解析
+     * request data using post method and analyze xml
      * 
      * @return
      * @throws javax.xml.parsers.ParserConfigurationException
      * @throws org.xml.sax.SAXException
      * @throws java.io.IOException
-     * @see [类、类#方法、类#成员]
      */
     public Result parseServerXmlWithPostRequest()
     {
@@ -250,7 +249,8 @@ public abstract class BaseXmlHandler<Params, Result> extends DefaultHandler
             XMLReader xr = sp.getXMLReader();
             xr.setContentHandler(this);
 
-            // HttpURLConnection的getResponseCode在第二次请求的时候总是返回-1的问题
+            // HttpURLConnection getResponseCode always return -1 at the
+            // moment of second request
             // HTTP connection reuse which was buggy pre-froyo
             if (Build.VERSION.SDK_INT < 8)
             {
@@ -263,7 +263,7 @@ public abstract class BaseXmlHandler<Params, Result> extends DefaultHandler
             conn.setConnectTimeout(DEFAULT_TIMEOUT);
             conn.setReadTimeout(DEFAULT_TIMEOUT);
 
-            // http消息头
+            // http header
             if (headers != null)
             {
                 for (String key : headers.keySet())
@@ -288,7 +288,7 @@ public abstract class BaseXmlHandler<Params, Result> extends DefaultHandler
 
                     if (encoding.toLowerCase().contains(HEADER_GZIP_VALUE))
                     {
-                        // gzip压缩
+                        // gzip compression
                         is = new GZIPInputStream(is);
                     }
                 }
@@ -362,32 +362,32 @@ public abstract class BaseXmlHandler<Params, Result> extends DefaultHandler
     }
 
     /**
-     * SAX解析本地XML文件格式
-     * <功能详细描述>
+     * parse local xml files via sax
+     * 
      * @param stream
      * @return
-     * @see [类、类#方法、类#成员]
      */
     public Result parseLocalXml(InputStream stream)
     {
-        // 1.实例化一个SAXParserFactory对象
+        // 1.Instantiate SAXParserFactory object
         SAXParserFactory factory = SAXParserFactory.newInstance();
 
         try
         {
-            // 2.实例化一个SAXParser对象；创建XMLReader对象,解析器
+            // 2.instantiate a SAXParser object; create XMLReader object and
+            // parse
             SAXParser parser = factory.newSAXParser();
             XMLReader reader = parser.getXMLReader();
 
-            // 3.设置handler，事件处理器
+            // 3.set handler as event handler
             reader.setContentHandler(this);
 
-            // 4.读取文件流
+            // 4.read file stream
             // InputStream stream =
             // context.getResources().openRawResource(R.raw.channels);
             InputSource source = new InputSource(stream);
 
-            // 5.解析文件
+            // 5.parse file
             reader.parse(source);
         }
         catch (ParserConfigurationException e)

@@ -5,41 +5,61 @@
     android:orientation="vertical"
     tools:context=".XmlParserActivity" >
 
-    <Button
-        android:id="@+id/local_sax_btn"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/local_sax" />
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/local_sax_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/local_sax" />
+
+        <Button
+            android:id="@+id/server_sax_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/server_sax" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/pull_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/pull" />
+
+        <Button
+            android:id="@+id/dom_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/dom" />
+    </LinearLayout>
 
     <Button
-        android:id="@+id/server_sax_btn"
+        android:id="@+id/factory_base_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/server_sax" />
-
-    <Button
-        android:id="@+id/pull_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/pull" />
-
-    <Button
-        android:id="@+id/dom_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/dom" />
+        android:text="@string/factory_base" />
     
     <Button 
-        android:id="@+id/structure_test_btn"
+        android:id="@+id/gson_test_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/structure_test"
-        />
-    
+        android:text="@string/gson_test"/>
+
     <TextView
         android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
 
 </LinearLayout>
