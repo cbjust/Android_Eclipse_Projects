@@ -1,4 +1,4 @@
-package com.cb.test.json;
+package com.cb.test.json.parser.model;
 
 public class Person
 {

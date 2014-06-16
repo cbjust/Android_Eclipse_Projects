@@ -9,6 +9,8 @@ import com.google.gson.reflect.TypeToken;
 /**
  * use Gson to resolve json code
  * 
+ * ps: this class is not useful, you'd better realize a concrete subclass to inherit the AnalysisContent method.
+ * 
  * @author binchen
  * @date 2014-6-4
  */
@@ -36,6 +38,13 @@ public abstract class HttpGsonFactoryBase<T> extends HttpFactoryBase<T>
             responseContent = "[" + responseContent + "]";
         }
 
+        /**
+         * Question: the statement below will throw java.lang.ClassCastException:
+         * com.google.gson.internal.LinkedTreeMap cannot be cast to
+         * com.cb.test.XX while using Generics method.
+         * 
+         * Better solution: Concrete subclass should inherit AnalysisContent func (e.g.GsonFactory).
+         */
         java.lang.reflect.Type listType = new TypeToken<T>() {}.getType();
         Gson gson = new Gson();
         T object = gson.fromJson(responseContent, listType);

@@ -16,4 +16,10 @@ package： com.cb.test
   
 3.Structure  
 package: com.cb.structure  
-描述：json/xml解析的基类  
+描述：json/xml解析的基类   
+一个问题记录：  
+public abstract class HttpGsonFactoryBase<T> extends HttpFactoryBase<T>  
+在该类中，实现了泛型方法:protected T AnalysisContent(String responseContent), 会导致抛出异常：java.lang.ClassCastException: com.google.gson.internal.LinkedTreeMap cannot be cast to com.cb.test.XX。  
+具体原因:?  
+解决方法是：在具体的子类中实现非泛型方法AnalysisContent, 如：protected ArrayList<Person> AnalysisContent(String responseContent)  
+ 

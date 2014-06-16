@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.cb.R;
 import com.cb.structure.http.HttpEventHandler;
-import com.cb.test.json.GsonTest;
-import com.cb.test.json.Person;
+import com.cb.test.json.parser.factory.GsonFactory;
+import com.cb.test.json.parser.model.Person;
 import com.cb.test.xml.parser.factory.ChannelsFactory;
 import com.cb.test.xml.parser.handler.DOMParserXmlHandler;
 import com.cb.test.xml.parser.handler.PullParserXmlHandler;
@@ -211,13 +211,39 @@ public class XmlParserActivity extends Activity
 
     public void callGson()
     {
-        ArrayList<Person> list = GsonTest.createJsonList();
-
-        for (Person person : list)
+        GsonFactory factory = new GsonFactory();
+        factory.DownloadDatas();
+        factory.setHttpEventHandler(new HttpEventHandler<ArrayList<Person>>()
         {
-            mData.append("Gson_" + person.getName() + ", " + person.getAge() + ", " + person.getAddress() + "\n");
-        }
-        mContentView.setText(mData);
-        mData.delete(0, mData.length());
+
+            @Override
+            public void HttpSucessHandler(ArrayList<Person> result)
+            {
+                for (Person person : result)
+                {
+                    mData.append("Gson_" + person.getName() + ", " + person.getAge() + ", " + person.getAddress()
+                            + "\n");
+                }
+                mContentView.setText(mData);
+                mData.delete(0, mData.length());
+            }
+
+            @Override
+            public void HttpFailHandler()
+            {
+                LogUtils.error("http failed");
+            }
+        });
+
+        // another sample
+        // ArrayList<Person> list = GsonFactory.createJsonList();
+        //
+        // for (Person person : list)
+        // {
+        // mData.append("Gson_" + person.getName() + ", " + person.getAge() +
+        // ", " + person.getAddress() + "\n");
+        // }
+        // mContentView.setText(mData);
+        // mData.delete(0, mData.length());
     }
 }
