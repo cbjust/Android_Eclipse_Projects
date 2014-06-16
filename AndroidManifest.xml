@@ -26,8 +26,16 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.cb.test.ui.ParserActivity"
+            android:label="@string/parser_name" >
+        </activity>
+        <activity
             android:name="com.cb.test.xml.parser.ui.XmlParserActivity"
             android:label="@string/xml_parser_name" >
+        </activity>
+        <activity
+            android:name="com.cb.test.json.parser.ui.JsonParserActivity"
+            android:label="@string/json_parser_name" >
         </activity>
         <activity
             android:name="com.cb.test.fragment.ui.FragmentTestActivity"
