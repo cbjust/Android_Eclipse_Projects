@@ -26,7 +26,7 @@ public class SAXParserServerXmlHandler extends BaseXmlHandler<Void, List<Channel
     public SAXParserServerXmlHandler(Context context, Void param)
     {
         super(param);
-        baseUrl = "http://192.168.27.62:8080/hello/another_type_channel.xml";
+        baseUrl = "http://192.168.27.53:8080/hello/another_type_channel.xml";
     }
 
     private static final boolean DEBUG = false;

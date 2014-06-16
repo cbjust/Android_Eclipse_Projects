@@ -7,6 +7,8 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -14,8 +16,6 @@ import android.widget.TextView;
 
 import com.cb.R;
 import com.cb.structure.http.HttpEventHandler;
-import com.cb.test.json.parser.factory.GsonFactory;
-import com.cb.test.json.parser.model.Person;
 import com.cb.test.xml.parser.factory.ChannelsFactory;
 import com.cb.test.xml.parser.handler.DOMParserXmlHandler;
 import com.cb.test.xml.parser.handler.PullParserXmlHandler;
@@ -26,8 +26,11 @@ import com.cb.utils.LogUtils;
 
 public class XmlParserActivity extends Activity
 {
+    protected static final int LOCAL_XML = 0;
 
-    private Button mLocalSaxBtn, mServerSaxBtn, mPullBtn, mDomBtn, mFactoryBaseBtn, mGsonBtn;
+    protected static final int SERVER_XML = 1;
+
+    private Button mLocalSaxBtn, mServerSaxBtn, mPullBtn, mDomBtn, mFactoryBaseBtn;
 
     private TextView mContentView;
 
@@ -49,14 +52,12 @@ public class XmlParserActivity extends Activity
         mPullBtn = (Button) findViewById(R.id.pull_btn);
         mDomBtn = (Button) findViewById(R.id.dom_btn);
         mFactoryBaseBtn = (Button) findViewById(R.id.factory_base_btn);
-        mGsonBtn = (Button) findViewById(R.id.gson_test_btn);
 
         mLocalSaxBtn.setOnClickListener(listener);
         mServerSaxBtn.setOnClickListener(listener);
         mPullBtn.setOnClickListener(listener);
         mDomBtn.setOnClickListener(listener);
         mFactoryBaseBtn.setOnClickListener(listener);
-        mGsonBtn.setOnClickListener(listener);
 
         mContentView = (TextView) findViewById(R.id.content);
 
@@ -91,9 +92,23 @@ public class XmlParserActivity extends Activity
                 case R.id.factory_base_btn:
                     callFactoryBase();
                     break;
+            }
+        }
+    };
 
-                case R.id.gson_test_btn:
-                    callGson();
+    private Handler mHandler = new Handler()
+    {
+        public void handleMessage(android.os.Message msg)
+        {
+            switch (msg.what)
+            {
+                case LOCAL_XML:
+                case SERVER_XML:
+                    StringBuilder str = (StringBuilder) msg.obj;
+                    mContentView.setText(str);
+                    mData.delete(0, str.length());
+                    break;
+                default:
                     break;
             }
         }
@@ -101,47 +116,69 @@ public class XmlParserActivity extends Activity
 
     public void parseLocalXmlViaSAX()
     {
-        try
+        new Thread()
         {
-            InputStream stream = this.getResources().openRawResource(R.raw.channels);
-
-            SAXParserLocalXmlHandler handler = new SAXParserLocalXmlHandler(this, null);
-            List<Channel> list = handler.parseLocalXml(stream);
-
-            for (int i = 0; i < list.size(); i++)
+            public void run()
             {
-                Channel c = list.get(i);
-                mData.append("Local_SAX_" + i + ": " + c.getId() + " " + c.getUrl() + " " + c.getContent() + "\n");
-            }
+                try
+                {
+                    InputStream stream = XmlParserActivity.this.getResources().openRawResource(R.raw.channels);
 
-            mContentView.setText(mData);
-            mData.delete(0, mData.length());
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+                    SAXParserLocalXmlHandler handler = new SAXParserLocalXmlHandler(XmlParserActivity.this, null);
+                    List<Channel> list = handler.parseLocalXml(stream);
+
+                    for (int i = 0; i < list.size(); i++)
+                    {
+                        Channel c = list.get(i);
+                        mData.append("Local_SAX_" + i + ": " + c.getId() + " " + c.getUrl() + " " + c.getContent()
+                                + "\n");
+                    }
+
+                    Message msg = new Message();
+                    msg.what = LOCAL_XML;
+                    msg.obj = mData;
+                    mHandler.sendMessage(msg);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            };
+        }.start();
+
     }
 
+    // start a thread to download and analyze xml
     public void parseServerXmlViaSAX()
     {
-        try
+        new Thread()
         {
-            SAXParserServerXmlHandler handler = new SAXParserServerXmlHandler(this, null);
-            List<Channel> list = handler.parseServerXml();
-            for (int i = 0; i < list.size(); i++)
+            public void run()
             {
-                Channel c = list.get(i);
-                mData.append("Server_SAX_" + i + ": " + c.getId() + " " + c.getUrl() + " " + c.getContent() + "\n");
-            }
+                try
+                {
+                    SAXParserServerXmlHandler handler = new SAXParserServerXmlHandler(XmlParserActivity.this, null);
+                    List<Channel> list = handler.parseServerXml();
+                    for (int i = 0; i < list.size(); i++)
+                    {
+                        Channel c = list.get(i);
+                        mData.append("Server_SAX_" + i + ": " + c.getId() + " " + c.getUrl() + " " + c.getContent()
+                                + "\n");
+                    }
+                    
+                    Message msg = new Message();
+                    msg.what = SERVER_XML;
+                    msg.obj = mData;
+                    mHandler.sendMessage(msg);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
 
-            mContentView.setText(mData);
-            mData.delete(0, mData.length());
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+            };
+        }.start();
+
     }
 
     public void callPull()
@@ -207,43 +244,5 @@ public class XmlParserActivity extends Activity
                 LogUtils.error("failed");
             }
         });
-    }
-
-    public void callGson()
-    {
-        GsonFactory factory = new GsonFactory();
-        factory.DownloadDatas();
-        factory.setHttpEventHandler(new HttpEventHandler<ArrayList<Person>>()
-        {
-
-            @Override
-            public void HttpSucessHandler(ArrayList<Person> result)
-            {
-                for (Person person : result)
-                {
-                    mData.append("Gson_" + person.getName() + ", " + person.getAge() + ", " + person.getAddress()
-                            + "\n");
-                }
-                mContentView.setText(mData);
-                mData.delete(0, mData.length());
-            }
-
-            @Override
-            public void HttpFailHandler()
-            {
-                LogUtils.error("http failed");
-            }
-        });
-
-        // another sample
-        // ArrayList<Person> list = GsonFactory.createJsonList();
-        //
-        // for (Person person : list)
-        // {
-        // mData.append("Gson_" + person.getName() + ", " + person.getAge() +
-        // ", " + person.getAddress() + "\n");
-        // }
-        // mContentView.setText(mData);
-        // mData.delete(0, mData.length());
     }
 }
