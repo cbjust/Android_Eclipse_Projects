@@ -22,6 +22,6 @@ package: com.cb.structure.*
 一个问题记录：  
 public abstract class HttpGsonFactoryBase<T> extends HttpFactoryBase<T>  
 在该类中，实现了泛型方法:protected T AnalysisContent(String responseContent), 会导致抛出异常：java.lang.ClassCastException: com.google.gson.internal.LinkedTreeMap cannot be cast to com.cb.test.XX。  
-具体原因:?  
+具体原因:generic type T itself is not available during runtime. It's been erased. It's only available during compile time.  
 解决方法是：在具体的子类中实现非泛型方法AnalysisContent, 如：protected ArrayList<Person> AnalysisContent(String responseContent)  
  
